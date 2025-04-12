@@ -9,8 +9,8 @@ from dotenv import dotenv_values
 import geeta
 
 # Load environment variables
-config = dotenv_values(".env")
-api_key = config.get('API_KEY')
+import os
+api_key = os.environ.get('API_KEY')
 
 # Initialize Mistral client
 client = Mistral(api_key=api_key)
