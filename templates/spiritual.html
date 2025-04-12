@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="mainbody">
+  <header class="header">
+    <div class="logo">
+       SpiritualAI
+    </div>
+    <div class="tagline">
+      Divine Guidance Through Artificial Intelligence
+    </div>
+  </header>
+
+  <form method="post" class="text-center">
+    <textarea name="question" placeholder="Ask your question here... (e.g. 'How can I find inner peace?')"></textarea>
+    <button type="submit" class="submit-btn">
+      Seek Guidance <i class="fas fa-hands-praying"></i>
+    </button>
+  </form>
+
+  <div id="loading"></div>
+
+  <div class="response-card">
+    {% if question %}
+    <div class="user-query">
+      <strong>Your Question:</strong>
+      <p>{{ question }}</p>
+    </div>
+    <div class="ai-response">
+      <strong><i class="fas fa-divine" style="color: var(--accent);"></i> Response:</strong>
+      <pre>
+        {{ res | safe }} <!-- Use the | safe filter to render HTML -->
+      </pre>
+    </div>
+    </div>
+    {% else %}
+    <div id="quote"></div>
+    <div class="disclaimer">
+      <h5><i class="fas fa-exclamation-triangle"></i> Important Note</h5>
+      <p>This AI provides spiritual guidance based on philosophical texts. Responses should be considered as
+        perspectives rather than factual advice. Use discretion when making life decisions.</p>
+    </div>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

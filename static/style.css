@@ -1,0 +1,124 @@
+:root {
+  --primary: #4B0082;
+  --secondary: #9370DB;
+  --accent: #FFD700;
+}
+
+body {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  color: var(--secondary);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+textarea {
+  width: 90%;
+  max-width: 1000px;
+  border: 2px solid var(--primary);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  min-height: 60px;
+  resize: none;
+  margin: 1rem auto;
+  display: block;
+}
+
+textarea:focus {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(75, 0, 130, 0.2);
+}
+
+.submit-btn {
+  background: var(--primary);
+  color: white;
+  padding: 1rem 3rem;
+  border-radius: 2rem;
+  border: none;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+  margin: 1rem auto;
+  display: block;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  background: #3a0066;
+}
+
+.response-card {
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.user-query,
+.ai-response {
+  margin: 0;
+}
+
+.ai-response pre {
+  white-space: pre-wrap; /* Preserves newlines and wraps text */
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.1rem;
+  color: #444;
+  margin: 0.5rem 0;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+}
+.ai-response strong {
+  font-weight: 600;
+  color: var(--primary);
+  display: inline; /* Ensures bold text stays inline */
+  margin: 0; /* Removes extra margin */
+  padding: 0; /* Removes extra padding */
+}
+
+.disclaimer {
+  background: #fff3cd;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-left: 4px solid #ffc107;
+}
+
+.footer {
+  text-align: center;
+  color: var(--secondary);
+  margin-top: 3rem;
+  padding: 2rem;
+  border-top: 1px solid #eee;
+}
+
+#loading {
+  display: none;
+  margin: 1rem auto;
+  width: 200px;
+  height: 200px;
+}
