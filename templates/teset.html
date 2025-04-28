@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiritual AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4B0082;
+            --secondary: #9370DB;
+            --accent: #FFD700;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .container {
+            max-width: 1300px;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .question-input {
+            width: 70%;
+            border: 2px solid var(--primary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 2rem;
+            border: none;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+            margin-top: 1.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            background: #3a0066;
+        }
+
+        .chat-history {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 1rem;
+            background: white;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+        }
+
+        .chat-message .question {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .religion-response {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--secondary);
+            margin-top: 3rem;
+            padding: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .religion-selector {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .religion-checkbox {
+            flex: 1;
+            position: relative;
+        }
+
+        .religion-checkbox input {
+            display: none;
+        }
+
+        .religion-checkbox label {
+            display: block;
+            padding: 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 1rem;
+            background: white;
+            color: var(--primary);
+            font-size: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .religion-checkbox label:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .religion-checkbox input:checked + label {
+            background: var(--primary);
+            color: white;
+        }
+
+            .navbar {
+      background-color: var(--primary) !important;
+    }
+
+    .navbar-brand, .nav-link {
+      color: white !important;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+      color: var(--accent) !important;
+    }
+    </style>
+</head>
+<body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Spiritual AI</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/horoscope">Horoscope</a></li>
+        <li class="nav-item"><a class="nav-link" href="/numerology">Numerology</a></li>
+      </ul>
+    </div>
+  </nav>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                SpiritualAI
+            </div>
+            <div class="tagline">
+                Divine Guidance Through Artificial Intelligence
+            </div>
+        </header>
+
+        <form method="post" class="text-center">
+            <textarea name="question" class="question-input"
+                placeholder="Ask your question here... (e.g. 'How can I find inner peace?')"></textarea>
+            
+            <div class="religion-selector">
+                <div class="religion-checkbox">
+                    <input type="checkbox" name="religions" value="Hinduism" id="hinduism">
+                    <label for="hinduism">Hinduism</label>
+                </div>
+                <div class="religion-checkbox">
+                    <input type="checkbox" name="religions" value="Islam" id="islam">
+                    <label for="islam">Islam</label>
+                </div>
+                <div class="religion-checkbox">
+                    <input type="checkbox" name="religions" value="Christianity" id="christianity">
+                    <label for="christianity">Christianity</label>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                Seek Guidance <i class="fas fa-hands-praying"></i>
+            </button>
+        </form>
+
+        <div class="chat-history">
+            {% for message in conversation_history | reverse %}
+            <div class="chat-message">
+                <div class="question">{{ message.question }}</div>
+                <div class="answer">
+                    {% for religion in message.religions %}
+                    <div class="religion-response">
+                        <strong>{{ religion }}:</strong>
+                        <div style="white-space: pre-wrap">{{ message.answer[religion] }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not conversation_history %}
+        <div class="disclaimer">
+            <h5><i class="fas fa-exclamation-triangle"></i> Important Note</h5>
+            <p class="mb-0">This AI provides spiritual guidance based on philosophical texts. Responses should be
+                considered as perspectives rather than factual advice. Use discretion when making life decisions.</p>
+        </div>
+        {% endif %}
+
+        <footer class="footer">
+            <div class="credit">
+                Crafted with <i class="fas fa-heart" style="color: #ff4757;"></i> by Kartik Suvarna
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

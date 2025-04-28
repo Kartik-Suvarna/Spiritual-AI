@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Page | Spiritual.AI{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #d1c4e9, #f3e5f5);
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 10px auto;
+        display: flex;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-info {
+        background-color: #6a1b9a;
+        /* Deep purple */
+        color: white;
+        padding: 30px;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .contact-info h2 {
+        font-size: 28px;
+        margin-bottom:10px;
+    }
+
+    .info-item {
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .info-item i {
+        margin-right: 12px;
+        color: white;
+        font-size: 18px;
+        width: 24px;
+        text-align: center;
+    }
+
+    .social-icons {
+        margin-top: 0px;
+    }
+
+    .social-icons i {
+        font-size: 20px;
+        margin-right: 15px;
+        color: white;
+        transition: 0.3s;
+    }
+
+    .social-icons i:hover {
+        color: #ce93d8;
+    }
+
+    .contact-form {
+        padding: 10px;
+        width: 60%;
+    }
+
+    .contact-form h2 {
+        color: #6a1b9a;
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    form input,
+    form textarea {
+        width: 100%;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        resize: none;
+    }
+
+    form button {
+        background-color: #8e24aa;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    form button:hover {
+        background-color: #6a1b9a;
+    }
+
+    .alert {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+    .alert-success {
+        background-color: #e1f5fe;
+        color: #00796b;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #842029;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+
+        .contact-info,
+        .contact-form {
+            width: 100%;
+            padding: 30px;
+        }
+    }
+
+    .faq-container {
+        max-width: 720px;
+        margin: 4rem auto;
+        background-color: #1a0033;
+        padding: 2rem;
+        border-radius: 24px;
+        box-shadow: 0 0 25px rgba(153, 51, 255, 0.3);
+    }
+
+    .faq-title {
+        text-align: center;
+        color: #cc99ff;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .faq-item {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #9933ff;
+    }
+
+    .faq-question {
+        cursor: pointer;
+        padding: 1rem;
+        background-color: #260040;
+        color: #e0ccff;
+        font-weight: bold;
+        border-radius: 12px;
+        transition: background-color 0.3s ease;
+    }
+
+    .faq-question:hover {
+        background-color: #330066;
+    }
+
+    .faq-answer {
+        padding: 0 1rem 1rem 1rem;
+        display: none;
+        color: #f3e5ff;
+    }
+
+    .faq-answer.show {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/4b2df4d2ff.js" crossorigin="anonymous"></script>
+<div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <div class="container">
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <div class="info-item"><i class="fas fa-map-marker-alt"></i>Mumbai, Maharashtra, India</div>
+            <div class="info-item"><a href="mailto:spiritual.ai@gmail.com"><i
+                        class="fas fa-envelope"></i>contact@spiritual.ai</div></a>
+            <div class="info-item"><i class="fas fa-phone"></i>+91 9820420569</div>
+            <div class="info-item"><a href="https://spiritual-ai.onrender.com/"><i
+                        class="fas fa-globe"></i>www.spiritual.ai</div></a>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Get in Touch</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('contact') }}">
+                <input type="text" name="full_name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="text" name="phone" placeholder="Phone Number">
+                <input type="text" name="subject" placeholder="Subject" required>
+                <textarea name="message" rows="6" placeholder="Write your message here..." required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="faq-container">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">What is Spiritual.AI?</div>
+            <div class="faq-answer">Spiritual.AI is an intelligent platform designed to guide you through your spiritual
+                journey with the help of AI-powered insights and tools.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Is my data safe with Spiritual.AI?</div>
+            <div class="faq-answer">Yes, your privacy is our top priority. All data is stored locally on your device and we don't record any of your data.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I use the Pomodoro timer?</div>
+            <div class="faq-answer">Go to the Pomodoro section, choose your session type, and click Start. The timer
+                helps you stay focused and balanced.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Can I get personalized spiritual insights?</div>
+            <div class="faq-answer">Absolutely! Our chatbot and horoscope features provide custom insights based on your
+                preferences and birth details.</div>
+        </div>
+    </div>
+
+    <script>
+        const questions = document.querySelectorAll('.faq-question');
+
+        questions.forEach((question) => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('show');
+            });
+        });
+    </script>
+</div>
+{% endblock %}

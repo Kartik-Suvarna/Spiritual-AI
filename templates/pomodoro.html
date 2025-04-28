@@ -1,0 +1,283 @@
+<!-- templates/pomodoro.html -->
+{% extends "base.html" %}
+
+{% block title %}Pomodoro Timer | Spiritual.AI{% endblock %}
+
+{% block content %}
+<style>
+  /* Global styles */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0d0d1a; /* dark purple-blue */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 4rem auto;
+    background-color: #1a0033; /* deep purple */
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: 0 0 25px rgba(153, 51, 255, 0.3);
+  }
+
+  h1 {
+    text-align: center;
+    color: #cc99ff; /* light purple */
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #e0ccff;
+  }
+
+  input[type="date"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: #330066; /* dark purple */
+    border: 1px solid #9933ff;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  button {
+    background-color: #9933ff;
+    border: none;
+    color: white;
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 14px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background-color: #7a1fd1;
+  }
+
+  .output {
+    margin-top: 2rem;
+    background-color: #260040;
+    padding: 1.5rem;
+    border-radius: 18px;
+    border: 1px solid #b266ff;
+    box-shadow: 0 0 15px rgba(204, 153, 255, 0.2);
+  }
+
+  .output p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #f3e5ff;
+  }
+
+  /* Pomodoro Timer Specific Styles */
+  .section-container {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    background-color: #3e3f43;
+    color: #a9a7a7;
+  }
+
+  .btn-focus {
+    background-color: #7a1fd1;
+    color: #ffffff;
+  }
+
+  .btn:hover{
+    background-color: #260040;
+    border-radius: 18px;
+    border: 1px solid #b266ff;
+    box-shadow: 0 0 15px rgba(204, 153, 255, 0.2);
+  }
+
+  .time-btn-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2em;
+  }
+
+  #time {
+    text-align: center;
+    color: #ffffff;
+    font-size: 5em;
+    font-weight: 600;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+  }
+
+  #btn-start,
+  #btn-pause {
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    background-color: #7a1fd1;
+  }
+
+  #btn-reset {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 2em;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+</style>
+
+<div class="container">
+  <div class="section-container">
+    <button id="focus" class="btn btn-timer btn-focus">Focus</button>
+    <button id="shortbreak" class="btn btn-shortbreak">Short Break</button>
+    <button id="longbreak" class="btn btn-longbreak">Long Break</button>
+  </div>
+  <div class="time-btn-container">
+    <span id="time"></span>
+    <div class="btn-container">
+      <button id="btn-start" class="show">Start</button>
+      <button id="btn-pause" class="hide">Pause</button>
+      <button id="btn-reset" class="hide">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Pomodoro Timer JavaScript -->
+<script>
+  let focusButton = document.getElementById("focus");
+  let buttons = document.querySelectorAll(".btn");
+  let shortBreakButton = document.getElementById("shortbreak");
+  let longBreakButton = document.getElementById("longbreak");
+  let startBtn = document.getElementById("btn-start");
+  let reset = document.getElementById("btn-reset");
+  let pause = document.getElementById("btn-pause");
+  let time = document.getElementById("time");
+  let set;
+  let active = "focus";
+  let count = 59;
+  let paused = true;
+  let minCount = 24;
+  time.textContent = `${minCount + 1}:00`;
+
+  const appendZero = (value) => {
+    value = value < 10 ? `0${value}` : value;
+    return value;
+  };
+
+  reset.addEventListener(
+    "click",
+    (resetTime = () => {
+      pauseTimer();
+      switch (active) {
+        case "long":
+          minCount = 14;
+          break;
+        case "short":
+          minCount = 4;
+          break;
+        default:
+          minCount = 24;
+          break;
+      }
+      count = 59;
+      time.textContent = `${minCount + 1}:00`;
+    })
+  );
+
+  const removeFocus = () => {
+    buttons.forEach((btn) => {
+      btn.classList.remove("btn-focus");
+    });
+  };
+
+  focusButton.addEventListener("click", () => {
+    removeFocus();
+    focusButton.classList.add("btn-focus");
+    pauseTimer();
+    minCount = 24;
+    count = 59;
+    time.textContent = `${minCount + 1}:00`;
+  });
+
+  shortBreakButton.addEventListener("click", () => {
+    active = "short";
+    removeFocus();
+    shortBreakButton.classList.add("btn-focus");
+    pauseTimer();
+    minCount = 4;
+    count = 59;
+    time.textContent = `${appendZero(minCount + 1)}:00`;
+  });
+
+  longBreakButton.addEventListener("click", () => {
+    active = "long";
+    removeFocus();
+    longBreakButton.classList.add("btn-focus");
+    pauseTimer();
+    minCount = 14;
+    count = 59;
+    time.textContent = `${minCount + 1}:00`;
+  });
+
+  pause.addEventListener(
+    "click",
+    (pauseTimer = () => {
+      paused = true;
+      clearInterval(set);
+      startBtn.classList.remove("hide");
+      pause.classList.remove("show");
+      reset.classList.remove("show");
+    })
+  );
+
+  startBtn.addEventListener("click", () => {
+    reset.classList.add("show");
+    pause.classList.add("show");
+    startBtn.classList.add("hide");
+    startBtn.classList.remove("show");
+    if (paused) {
+      paused = false;
+      time.textContent = `${appendZero(minCount)}:${appendZero(count)}`;
+      set = setInterval(() => {
+        count--;
+        time.textContent = `${appendZero(minCount)}:${appendZero(count)}`;
+        if (count == 0) {
+          if (minCount != 0) {
+            minCount--;
+            count = 60;
+          } else {
+            clearInterval(set);
+          }
+        }
+      }, 1000);
+    }
+  });
+</script>
+{% endblock %}

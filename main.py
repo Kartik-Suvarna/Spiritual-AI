@@ -170,6 +170,9 @@ def index():
         return render_template('horoscope.html', selected_date=selected_date, zodiac_sign=zodiac_sign,horoscope=horo)
     return render_template('horoscope.html', selected_date=selected_date, zodiac_sign="enter birthdate",horoscope="enter birthdate")
 
+@server.route('/pomodoro')
+def pomodoro():
+    return render_template('pomodoro.html')
 
 if __name__ == '__main__':
 	server.run(debug=False, host='0.0.0.0', port=80)
